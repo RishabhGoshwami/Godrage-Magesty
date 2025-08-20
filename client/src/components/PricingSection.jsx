@@ -1,58 +1,75 @@
 import React from "react";
-import bhk3 from "../assets/3bhk.png";
 
-import bhk4 from "../assets/4bhk.png";
-
+// This is the updated PricingSection component with a modern, responsive design.
+// It uses a premium color palette and distinct styles for desktop and mobile views.
 export default function PricingSection({ openPopup }) {
+  // Data for the different apartment plans.
+  // Using placeholder images since local files cannot be rendered.
   const plans = [
-    { type: "3 BHK", price: "2.98-3.26 Cr*", img: bhk3 },
-    { type: "3.5 BHK", price: "3.33-3.86 Cr*", img: bhk3 },
-    { type: "4 BHK", price: "3.60-4.17 Cr*", img: bhk4 },
+    { 
+      type: "3 BHK", 
+      price: "2.98 - 3.26 Cr*", 
+      area: "On Request",
+      img: "https://placehold.co/300x200/4B5563/FFFFFF?text=3+BHK", 
+    },
+    { 
+      type: "3.5 BHK", 
+      price: "3.33 - 3.86 Cr*",
+      area: "On Request",
+      img: "https://placehold.co/300x200/4B5563/FFFFFF?text=3.5+BHK", 
+    },
+    { 
+      type: "4 BHK", 
+      price: "3.60 - 4.17 Cr*",
+      area: "On Request",
+      img: "https://placehold.co/300x200/4B5563/FFFFFF?text=4+BHK",
+    },
   ];
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">
+    <div className="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
+      {/* Main heading for the section */}
+      <h2 className="text-4xl md:text-5xl font-extrabold text-center text-gray-900 mb-12">
         Area & Pricing
       </h2>
 
-      {/* Desktop Table */}
-      <div className="hidden md:block overflow-x-auto">
-        <table className="w-full border border-gray-300 rounded-lg overflow-hidden shadow">
-          <thead>
-            <tr className="bg-blue-600 text-white text-sm md:text-base">
-              <th className="border p-3">Type</th>
-              <th className="border p-3">Area</th>
-              <th className="border p-3">Price (Onward)</th>
-              <th className="border p-3">Floor Plan</th>
-              <th className="border p-3">Details</th>
+      {/* Desktop View: Table for a clean, structured look on larger screens */}
+      <div className="hidden md:block max-w-7xl mx-auto overflow-hidden rounded-xl shadow-2xl">
+        <table className="min-w-full bg-white">
+          <thead className="bg-gray-800 text-white">
+            <tr className="text-left font-semibold text-lg">
+              <th className="py-4 px-6">Type</th>
+              <th className="py-4 px-6">Area</th>
+              <th className="py-4 px-6">Price</th>
+              <th className="py-4 px-6">Floor Plan</th>
+              <th className="py-4 px-6">Details</th>
             </tr>
           </thead>
           <tbody>
             {plans.map((item, idx) => (
-              <tr
-                key={idx}
-                className="hover:bg-gray-50 transition duration-300 text-center text-sm md:text-base"
+              <tr 
+                key={idx} 
+                className="border-b border-gray-200 transition-all duration-300 hover:bg-gray-100"
               >
-                <td className="border p-3 font-semibold">{item.type}</td>
-                <td className="border p-3">On Request</td>
-                <td className="border p-3 text-blue-700 font-medium">
-                  {item.price}
-                </td>
-                <td className="border p-3 text-center">
+                <td className="py-5 px-6 font-bold text-gray-800">{item.type}</td>
+                <td className="py-5 px-6 text-gray-600">{item.area}</td>
+                <td className="py-5 px-6 font-semibold text-emerald-600">{item.price}</td>
+                <td className="py-5 px-6">
                   <img
                     src={item.img}
                     alt={item.type}
-                    className="w-24 h-20 md:w-28 md:h-24 object-cover rounded-lg mx-auto cursor-pointer blur-sm hover:blur-none transition"
+                    className="w-32 h-20 object-cover rounded-lg mx-auto cursor-pointer
+                                   transition-all duration-500 blur-sm hover:blur-none hover:scale-110"
                     onClick={openPopup}
                   />
                 </td>
-                <td className="border p-3 text-center">
+                <td className="py-5 px-6 text-center">
                   <button
                     onClick={openPopup}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                    className="bg-gray-900 text-white font-semibold px-6 py-3 rounded-full 
+                                   shadow-lg transition-all duration-300 hover:bg-gray-700 hover:scale-105"
                   >
-                    Complete Costing Detail
+                    Get Full Details
                   </button>
                 </td>
               </tr>
@@ -61,28 +78,29 @@ export default function PricingSection({ openPopup }) {
         </table>
       </div>
 
-      {/* Mobile Cards */}
-      <div className="md:hidden space-y-4">
+      {/* Mobile View: Cards for a better experience on small screens */}
+      <div className="md:hidden space-y-8">
         {plans.map((item, idx) => (
-          <div
+          <div 
             key={idx}
-            className="border rounded-lg shadow p-4 bg-white"
+            className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl"
           >
-            <h3 className="text-lg font-semibold mb-2">{item.type}</h3>
-            <p className="text-gray-600 mb-1">Area: On Request</p>
-            <p className="text-blue-700 font-medium mb-3">{item.price}</p>
-            <div className="flex items-center justify-between">
-              <img
-                src={item.img}
-                alt={item.type}
-                className="w-28 h-24 object-cover rounded-lg cursor-pointer blur-sm hover:blur-none transition"
-                onClick={openPopup}
-              />
+            <img
+              src={item.img}
+              alt={item.type}
+              className="w-full h-48 object-cover cursor-pointer blur-sm hover:blur-none transition-all duration-500"
+              onClick={openPopup}
+            />
+            <div className="p-6">
+              <h3 className="text-2xl font-bold text-gray-900 mb-1">{item.type}</h3>
+              <p className="text-gray-600 mb-3">Area: {item.area}</p>
+              <p className="text-xl font-semibold text-emerald-600 mb-4">{item.price}</p>
               <button
                 onClick={openPopup}
-                className="bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition"
+                className="w-full bg-gray-900 text-white font-semibold px-4 py-3 rounded-full 
+                           shadow-md transition-all duration-300 hover:bg-gray-700 hover:scale-105"
               >
-                Details
+                Get Details
               </button>
             </div>
           </div>
