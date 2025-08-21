@@ -1,16 +1,15 @@
 import React from "react";
+import img3Bhk from "../assets/3bhk.png"; // 3 BHK image
+import img4Bhk from "../assets/4bhk.png"; // 4 BHK image
 
-// This is the updated PricingSection component with a modern, responsive design.
-// It uses a premium color palette and distinct styles for desktop and mobile views.
 export default function PricingSection({ openPopup }) {
   // Data for the different apartment plans.
-  // Using placeholder images since local files cannot be rendered.
   const plans = [
     { 
       type: "3 BHK", 
       price: "2.98 - 3.26 Cr*", 
       area: "On Request",
-      img: "https://placehold.co/300x200/4B5563/FFFFFF?text=3+BHK", 
+      img: img3Bhk, 
     },
     { 
       type: "3.5 BHK", 
@@ -22,7 +21,7 @@ export default function PricingSection({ openPopup }) {
       type: "4 BHK", 
       price: "3.60 - 4.17 Cr*",
       area: "On Request",
-      img: "https://placehold.co/300x200/4B5563/FFFFFF?text=4+BHK",
+      img: img4Bhk,
     },
   ];
 
@@ -33,7 +32,7 @@ export default function PricingSection({ openPopup }) {
         Area & Pricing
       </h2>
 
-      {/* Desktop View: Table for a clean, structured look on larger screens */}
+      {/* Desktop View */}
       <div className="hidden md:block max-w-7xl mx-auto overflow-hidden rounded-xl shadow-2xl">
         <table className="min-w-full bg-white">
           <thead className="bg-gray-800 text-white">
@@ -78,7 +77,7 @@ export default function PricingSection({ openPopup }) {
         </table>
       </div>
 
-      {/* Mobile View: Cards for a better experience on small screens */}
+      {/* Mobile View */}
       <div className="md:hidden space-y-8">
         {plans.map((item, idx) => (
           <div 
