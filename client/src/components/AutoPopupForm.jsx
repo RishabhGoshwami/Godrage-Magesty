@@ -1,7 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function AutoPopupForm({ isOpen, onClose }) {
-  if (!isOpen) return null; // ❌ Agar open nahi hai to kuch render mat karo
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
+
+  if (!isOpen) return null;
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Default form submit ko rokta hai
+
+    // Apni details yahan update karein:
+    // 1. Apna phone number international format me daalein (e.g., +919990980295)
+    // 2. Jo message aapko milna hai, use banayein
+    const phoneNumber = "+919990989295";
+    const message = `New Inquiry for Godrej Majesty :\nName: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}`;
+
+    // Message ko URL-safe banane ke liye encode karein
+    const encodedMessage = encodeURIComponent(message);
+
+    // WhatsApp URL banayein
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+    // User ko naye tab mein WhatsApp par redirect karein
+    window.open(whatsappUrl, "_blank");
+
+    // Form ko reset karein ya popup ko close karein
+    // onClose();
+    // setFormData({ name: '', email: '', phone: '' });
+  };
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
@@ -28,28 +62,40 @@ export default function AutoPopupForm({ isOpen, onClose }) {
           me about its products and offers.
         </p>
 
-        {/* Simple form */}
-        <form className="space-y-3">
+        {/* Form with handler */}
+        <form className="space-y-3" onSubmit={handleSubmit}>
           <input
             type="text"
+            name="name"
             placeholder="Your Name"
             className="w-full border rounded-md p-2"
+            value={formData.name}
+            onChange={handleInputChange}
+            required
           />
           <input
             type="email"
+            name="email"
             placeholder="Your Email"
             className="w-full border rounded-md p-2"
+            value={formData.email}
+            onChange={handleInputChange}
+            required
           />
           <input
             type="tel"
+            name="phone"
             placeholder="Your Phone"
             className="w-full border rounded-md p-2"
+            value={formData.phone}
+            onChange={handleInputChange}
+            required
           />
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+            className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition"
           >
-            Submit
+            Submit on WhatsApp
           </button>
         </form>
       </div>
