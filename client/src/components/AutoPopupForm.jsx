@@ -22,7 +22,7 @@ export default function AutoPopupForm({ isOpen, onClose }) {
 
     try {
       // ✅ Local backend ko hit kar rahe hain
-      const response = await fetch("http://localhost:5000/submit-lead", {
+      const response = await fetch("https://godrage-magesty2.onrender.com/submit-lead", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
