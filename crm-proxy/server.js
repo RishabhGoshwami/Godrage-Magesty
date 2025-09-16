@@ -6,11 +6,13 @@ const cors = require("cors");
 const app = express();
 app.use(express.json());
 
-// ✅ Allow both 5173 and 5174 during dev
+// ✅ Allowed origins: local dev + production
 const ALLOWED_ORIGINS = [
   "http://localhost:5173",
   "http://localhost:5174",
+  process.env.FRONTEND_ORIGIN, // e.g., https://www.godrejmajestysec12.in
 ];
+
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -25,36 +27,44 @@ app.use(
   })
 );
 
+// ✅ Handle preflight OPTIONS requests
+app.options("*", cors());
+
+// Environment variables
 const PORT = process.env.PORT || 8000;
 const CRM_URL = process.env.CRM_URL;
 const ACCESS_KEY = process.env.ACCESS_KEY;
 
 if (!CRM_URL || !ACCESS_KEY) {
-  console.error("❌ Please set CRM_URL and ACCESS_KEY in .env");
+  console.error("❌ Please set CRM_URL and ACCESS_KEY in environment variables");
   process.exit(1);
 }
 
+// POST /submit-lead
 app.post("/submit-lead", async (req, res) => {
   try {
-    // Build payload to send to CRM
+    console.log("📩 Incoming lead:", req.body);
+
     const crmPayload = {
-      access_key: ACCESS_KEY, // default: put key in body
+      access_key: ACCESS_KEY,
       project: req.body.project || "Godrej Majesty",
       name: req.body.name,
       email: req.body.email,
       phone: req.body.phone,
-      ...req.body.extra, // forward any extra fields
+      ...req.body.extra,
     };
 
-    // ✅ Send request to CRM
+    console.log("➡️ Forwarding payload to CRM:", crmPayload);
+
     const crmResponse = await axios.post(CRM_URL, crmPayload, {
       headers: { "Content-Type": "application/json" },
       timeout: 10000,
     });
 
+    console.log("✅ CRM response:", crmResponse.data);
     res.status(crmResponse.status).json(crmResponse.data);
   } catch (err) {
-    console.error("Proxy error:", err.message);
+    console.error("❌ Proxy error:", err.message);
     if (err.response) {
       console.error("CRM response data:", err.response.data);
       return res.status(err.response.status || 502).json({
@@ -66,6 +76,7 @@ app.post("/submit-lead", async (req, res) => {
   }
 });
 
+// Start server
 app.listen(PORT, () => {
-  console.log(`🚀 Proxy running on http://localhost:${PORT} -> forwards to ${CRM_URL}`);
+  console.log(`🚀 Backend running on port ${PORT} -> forwards to CRM: ${CRM_URL}`);
 });
