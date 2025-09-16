@@ -7,6 +7,8 @@ export default function AutoPopupForm({ isOpen, onClose }) {
     phone: "",
   });
 
+  const [status, setStatus] = useState(""); // ✅ status ke liye
+
   if (!isOpen) return null;
 
   const handleInputChange = (e) => {
@@ -14,27 +16,38 @@ export default function AutoPopupForm({ isOpen, onClose }) {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Default form submit ko rokta hai
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("Submitting...");
 
-    // Apni details yahan update karein:
-    // 1. Apna phone number international format me daalein (e.g., +919990980295)
-    // 2. Jo message aapko milna hai, use banayein
-    const phoneNumber = "+919990989295";
-    const message = `New Inquiry for Godrej Majesty :\nName: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}`;
+    try {
+      // ✅ Local backend ko hit kar rahe hain
+      const response = await fetch("http://localhost:5000/submit-lead", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          project: "Godrej Majesty", // ✅ static project
+        }),
+      });
 
-    // Message ko URL-safe banane ke liye encode karein
-    const encodedMessage = encodeURIComponent(message);
+      const result = await response.json();
 
-    // WhatsApp URL banayein
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-
-    // User ko naye tab mein WhatsApp par redirect karein
-    window.open(whatsappUrl, "_blank");
-
-    // Form ko reset karein ya popup ko close karein
-    // onClose();
-    // setFormData({ name: '', email: '', phone: '' });
+      if (result.success) {
+        setStatus("✅ Form submitted successfully!");
+        setFormData({ name: "", email: "", phone: "" });
+        setTimeout(() => onClose(), 2000);
+      } else {
+        setStatus("❌ Submission failed. Try again.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setStatus("❌ Something went wrong.");
+    }
   };
 
   return (
@@ -53,13 +66,13 @@ export default function AutoPopupForm({ isOpen, onClose }) {
           Express Your Interest
         </h2>
         <p className="text-lg text-center font-semibold text-red-600 mb-4">
-          Go'drej Majesty
+          Godrej Majesty
         </p>
 
         {/* Description */}
         <p className="text-sm text-gray-600 mb-4">
-          I authorize company representatives to Call, SMS, Email or WhatsApp
-          me about its products and offers.
+          I authorize company representatives to Call, SMS, Email or WhatsApp me
+          about its products and offers.
         </p>
 
         {/* Form with handler */}
@@ -93,11 +106,16 @@ export default function AutoPopupForm({ isOpen, onClose }) {
           />
           <button
             type="submit"
-            className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition"
+            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
           >
-            Submit on WhatsApp
+            Submit
           </button>
         </form>
+
+        {/* Status Message */}
+        {status && (
+          <p className="text-center text-sm mt-3 font-semibold">{status}</p>
+        )}
       </div>
     </div>
   );
