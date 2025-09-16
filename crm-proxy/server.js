@@ -6,29 +6,25 @@ const cors = require("cors");
 const app = express();
 app.use(express.json());
 
-// ✅ Allowed origins: local dev + production
-const ALLOWED_ORIGINS = [
-  "http://localhost:5173",
-  "http://localhost:5174",
-  process.env.FRONTEND_ORIGIN, // e.g., https://www.godrejmajestysec12.in
-];
+const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN;
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || ALLOWED_ORIGINS.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-
-// ✅ Handle preflight OPTIONS requests
-app.options("*", cors());
+// ✅ CORS middleware
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (origin && origin === FRONTEND_ORIGIN) {
+    res.setHeader("Access-Control-Allow-Origin", FRONTEND_ORIGIN);
+    res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization"
+    );
+  }
+  // Preflight request
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
 
 // Environment variables
 const PORT = process.env.PORT || 8000;
@@ -43,8 +39,6 @@ if (!CRM_URL || !ACCESS_KEY) {
 // POST /submit-lead
 app.post("/submit-lead", async (req, res) => {
   try {
-    console.log("📩 Incoming lead:", req.body);
-
     const crmPayload = {
       access_key: ACCESS_KEY,
       project: req.body.project || "Godrej Majesty",
@@ -54,19 +48,15 @@ app.post("/submit-lead", async (req, res) => {
       ...req.body.extra,
     };
 
-    console.log("➡️ Forwarding payload to CRM:", crmPayload);
-
     const crmResponse = await axios.post(CRM_URL, crmPayload, {
       headers: { "Content-Type": "application/json" },
       timeout: 10000,
     });
 
-    console.log("✅ CRM response:", crmResponse.data);
     res.status(crmResponse.status).json(crmResponse.data);
   } catch (err) {
-    console.error("❌ Proxy error:", err.message);
+    console.error("Proxy error:", err.message);
     if (err.response) {
-      console.error("CRM response data:", err.response.data);
       return res.status(err.response.status || 502).json({
         proxied: true,
         error: err.response.data,
