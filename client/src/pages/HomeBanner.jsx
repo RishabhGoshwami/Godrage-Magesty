@@ -46,7 +46,7 @@ const HomeBanner = ({ openPopup }) => {
                      hover:scale-110 transform transition duration-300 
                      text-black rounded-full shadow-lg animate-bounce"
         >
-          📖 Request E-Brochure
+          📖 Download-Brochure
         </button>
       </div>
     </section>
