@@ -65,7 +65,7 @@ const AboutBuilder = () => {
             Godrej Properties brings the Godrej Group philosophy of innovation, sustainability and excellence to the real estate industry. Each Godrej Properties development combines a 120–year legacy of excellence and trust with a commitment to cutting-edge design and technology.
           </p>
           <p className="text-gray-800 font-semibold mb-2">
-            Agent RERA: <span className="font-normal">UPRERAAGT23971</span>
+            Agent RERA: <span className="font-normal">UPRERAAGT23257</span>
           </p>
           <p className="text-gray-800 font-semibold mb-4">
             Projects RERA: <span className="font-normal">UPRERAPRJ250823</span>

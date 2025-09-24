@@ -96,7 +96,7 @@ export default function HomeBannerWithForm() {
       </div>
 
       {/* Left side - Banner Content */}
-      <div className="relative z-10 w-full md:w-1/2 h-screen md:h-auto flex flex-col justify-center px-4 py-12 md:p-16 lg:pl-24">
+      <div className="relative z-10 w-full md:w-1/2 h-screen md:h-auto flex flex-col justify-center px-4 py-12 md:p-16 lg:pl-24 mt-13">
         <h1 className="text-3xl md:text-5xl font-bold text-white drop-shadow-lg mb-4 max-w-xl">
           Welcome to Your Dream Home
         </h1>
