@@ -3,14 +3,14 @@ import { Menu, X } from "lucide-react";
 import Logo from "../assets/logo-1.png";
 
 const navLinks = [
-  { name: "Welcome", href: "#home" },
- 
-  { name: "Key Features", href: "#highlights" },
+  { name: "Home", href: "#home" },
+   { name: "Overview", href: "#overview" },
+  { name: "Highlights", href: "#highlights" },
   { name: "Prime Location", href: "#location" },
-  { name: "Luxury Amenities", href: "#amenities" },
+  { name: "Amenities", href: "#amenities" },
   { name: "Plans & Pricing", href: "#pricing" },
-  { name: "Photo Tour", href: "#gallery" },
-  { name: "Project Overview", href: "#overview" },
+  { name: "Gallery", href: "#gallery" },
+
 ];
 
 const Navbar = () => {
