@@ -30,69 +30,7 @@ const Footer = () => {
     <footer className="relative bg-[#0F172A] text-gray-200">
       <div className="absolute inset-0 bg-black/50"></div>
       <div className="relative z-10 font-sans">
-        <div className="py-20 max-w-7xl mx-auto px-6 grid md:grid-cols-4 sm:grid-cols-2 gap-12">
-          {/* About */}
-          <div>
-            <h3 className="text-3xl font-serif font-bold mb-4 tracking-wide text-white">
-              Godrej Majesty
-            </h3>
-            <p className="text-sm leading-relaxed text-gray-400">
-              Discover unparalleled luxury at Godrej Majesty. We offer
-              meticulously designed 3 and 4 BHK residences with world-class
-              amenities and breathtaking views in Greater Noida West.
-            </p>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-semibold text-lg mb-4 text-gray-100">
-              Quick Links
-            </h4>
-            <ul className="space-y-3 text-sm">
-              {["home", "offers", "highlights", "location", "amenities", "pricing", "gallery"].map((id) => (
-                <li key={id}>
-                  <a
-                    href={`#${id}`}
-                    className="hover:text-green-300 transition-colors duration-300 capitalize"
-                  >
-                    {id.replace("-", " ")}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h4 className="font-semibold text-lg mb-4 text-gray-100">
-              Contact Us
-            </h4>
-            <address className="not-italic text-sm text-gray-400 space-y-2">
-              <p className="flex items-center gap-2">
-                <span>📍 Sector-12, Greater Noida West, UP</span>
-              </p>
-              <p className="flex items-center gap-2">
-                <span>📞 +91 9990989295</span>
-              </p>
-              <p className="flex items-center gap-2">
-                <span>📧 info@godrejmajesty.com</span>
-              </p>
-            </address>
-          </div>
-
-          {/* Social Links */}
-          <div>
-            <h4 className="font-semibold text-lg mb-4 text-gray-100">
-              Follow Us
-            </h4>
-            <div className="flex space-x-6">
-              <a href="https://www.facebook.com/GodrejRealEstate" className="text-gray-400 hover:text-blue-500 transition-colors duration-300"><FacebookIcon /></a>
-              <a href="https://www.instagram.com/godrejrealestate/" className="text-gray-400 hover:text-pink-500 transition-colors duration-300"><InstagramIcon /></a>
-              <a href="https://twitter.com/GodrejRealEstate" className="text-gray-400 hover:text-sky-400 transition-colors duration-300"><TwitterIcon /></a>
-              <a href="https://youtube.com/@GodrejRealEstate" className="text-gray-400 hover:text-red-500 transition-colors duration-300"><YoutubeIcon /></a>
-            </div>
-          </div>
-        </div>
+        
 
         {/* SEO & Disclaimer Section */}
         <div className="text-gray-500 text-xs px-6 md:px-20 pt-6 pb-10 leading-relaxed border-t border-gray-700 space-y-4 font-light">

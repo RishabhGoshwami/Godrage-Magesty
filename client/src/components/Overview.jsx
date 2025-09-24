@@ -10,15 +10,15 @@ const Overview = ({ openPopup }) => {
         <div>
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Overview</h2>
           <p className="text-gray-700 leading-relaxed mb-4">
-            Welcome to <b>Go'drej Majesty</b> in Sector 12 Greater Noida West —
+            Welcome to <b>Godrej Majesty</b> in Sector 12 Greater Noida West —
             a grand residential address that blends modern architecture with lush
             greenery and unmatched connectivity. This upcoming project by{" "}
-            <b>Go'drej Properties</b> brings you thoughtfully planned 3 & 4 BHK
+            <b>Godrej Properties</b> brings you thoughtfully planned 3 & 4 BHK
             luxury residences, designed for elegant living and smart lifestyles.
           </p>
           <p className="text-gray-700 leading-relaxed mb-6">
             Crafted for those who seek sophistication, comfort, and convenience
-            in one place, <b>Go'drej Sector 12</b> offers the perfect setting
+            in one place, <b>Godrej Sector 12</b> offers the perfect setting
             for your dream home, surrounded by the finest infrastructure,
             seamless connectivity, and world-class amenities.
           </p>

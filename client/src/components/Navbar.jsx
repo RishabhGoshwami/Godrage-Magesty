@@ -4,7 +4,7 @@ import Logo from "../assets/logo-1.png";
 
 const navLinks = [
   { name: "Welcome", href: "#home" },
-  { name: "Special Deals", href: "#offers" },
+ 
   { name: "Key Features", href: "#highlights" },
   { name: "Prime Location", href: "#location" },
   { name: "Luxury Amenities", href: "#amenities" },

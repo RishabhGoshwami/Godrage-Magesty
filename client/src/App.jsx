@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import HomeBanner from "./pages/HomeBanner";
-import OffersSection from "./pages/OffersSection";
+import AboutBuilder from "./components/AboutBuilder";
 import KeyFeatures from "./pages/KeyFeatures";
 import PrimeLocation from "./pages/PrimeLocation";
 import AutoPopupForm from "./components/AutoPopupForm";
@@ -34,18 +34,16 @@ const App = () => {
       <div id="home">
         <HomeBanner openPopup={openPopup} />
       </div>
-
-      <div id="offers">
-        <OffersSection openPopup={openPopup} />
+    <div id="overview">
+        <Overview openPopup={openPopup} />
       </div>
+      
 
       <div id="highlights">
         <KeyFeatures />
       </div>
 
-      <div id="location">
-        <PrimeLocation openPopup={openPopup} />
-      </div>
+     
 
       <div id="amenities">
         <Amenities openPopup={openPopup} />
@@ -58,9 +56,12 @@ const App = () => {
       <div id="gallery">
         <ProjectGallery openPopup={openPopup} />
       </div>
+       <div id="location">
+        <PrimeLocation openPopup={openPopup} />
+      </div>
 
-      <div id="overview">
-        <Overview openPopup={openPopup} />
+      <div id="">
+        <AboutBuilder openPopup={openPopup} />
       </div>
       <Footer/>
       <FloatingButtons />
