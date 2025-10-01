@@ -1,0 +1,8 @@
+# Allow all search engines to crawl the site
+User-agent: *
+Disallow: /admin/
+Disallow: /login/
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.godrejmajestysec12.in/sitemap.xml

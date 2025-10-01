@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Home -->
+  <url>
+    <loc>https://www.godrejmajestysec12.in/#home</loc>
+    <lastmod>2025-10-01</lastmod>
+    <priority>1.00</priority>
+  </url>
+
+  <!-- Overview -->
+  <url>
+    <loc>https://www.godrejmajestysec12.in/#overview</loc>
+    <lastmod>2025-10-01</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Highlights -->
+  <url>
+    <loc>https://www.godrejmajestysec12.in/#highlights</loc>
+    <lastmod>2025-10-01</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Location -->
+  <url>
+    <loc>https://www.godrejmajestysec12.in/#location</loc>
+    <lastmod>2025-10-01</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Amenities -->
+  <url>
+    <loc>https://www.godrejmajestysec12.in/#amenities</loc>
+    <lastmod>2025-10-01</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Pricing -->
+  <url>
+    <loc>https://www.godrejmajestysec12.in/#pricing</loc>
+    <lastmod>2025-10-01</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Gallery -->
+  <url>
+    <loc>https://www.godrejmajestysec12.in/#gallery</loc>
+    <lastmod>2025-10-01</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+</urlset>
