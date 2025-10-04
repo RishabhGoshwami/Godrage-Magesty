@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 
-// The PDF files cannot be imported directly as modules.
-// Instead, reference them from the public/assets directory.
-// Make sure to place the actual PDF files in your project's `public` folder.
-// For example: /public/assets/Godrej Sec-12 Master Plan.pdf
-// and /public/assets/Sector 12_Unit plan 3 & 4 Bhk 10-06-25 T 1,2,3 .pdf
+// ✅ PDF files placed in `public/assets` folder
+// Example: /public/assets/Godrej Sec-12 Master Plan.pdf
+//          /public/assets/Sector 12_Unit plan 3 & 4 Bhk 10-06-25 T 1,2,3 .pdf
 
 export default function AutoPopupForm({ isOpen, onClose }) {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
   const [status, setStatus] = useState("");
   const [showDownloads, setShowDownloads] = useState(false);
 
-  // Reference the PDF files directly as URL strings
   const pdfs = {
     site: "/assets/Godrej Sec-12 Master Plan.pdf",
     floor: "/assets/Sector 12_Unit plan 3 & 4 Bhk 10-06-25 T 1,2,3 .pdf",
@@ -24,12 +21,14 @@ export default function AutoPopupForm({ isOpen, onClose }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // ✅ FORM SUBMISSION FUNCTION
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("Submitting...");
 
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
+      // 1️⃣ Send data to Web3Forms (for email notification)
+      const web3Response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -41,14 +40,30 @@ export default function AutoPopupForm({ isOpen, onClose }) {
         }),
       });
 
-      const result = await response.json();
+      const web3Result = await web3Response.json();
 
-      if (result.success) {
+      // 2️⃣ Send data to CRM API
+      const crmUrl = `https://app.propertyexpertrealtors.com/api/getRecords.php?authentication_key=VndsbUlpKzhKdWpEbEZNSUNva2t1UT09&leads_full_name=${encodeURIComponent(
+        formData.name
+      )}&leads_phone_number=${encodeURIComponent(
+        formData.phone
+      )}&leads_email_id=${encodeURIComponent(
+        formData.email
+      )}&leads_type=LEAD&leads_projects_name=${encodeURIComponent(
+        "Godrej Majesty"
+      )}&leads_source=Website&leads_entry_type=AutoPopup`;
+
+      const crmResponse = await fetch(crmUrl);
+      const crmText = await crmResponse.text(); // CRM may not return JSON
+
+      // 3️⃣ Handle responses
+      if (web3Result.success && crmResponse.ok) {
         setStatus("✅ Form submitted successfully! Choose a brochure to download.");
         setFormData({ name: "", email: "", phone: "" });
         setShowDownloads(true);
       } else {
-        setStatus("❌ Submission failed. Try again.");
+        setStatus("❌ Submission failed on one of the endpoints.");
+        console.warn("CRM Response:", crmText);
       }
     } catch (error) {
       console.error("Error submitting lead:", error);
@@ -56,6 +71,7 @@ export default function AutoPopupForm({ isOpen, onClose }) {
     }
   };
 
+  // ✅ File Download Handlers
   const handleDownload = async (url, filename) => {
     try {
       const a = document.createElement("a");
@@ -91,15 +107,19 @@ export default function AutoPopupForm({ isOpen, onClose }) {
           &times;
         </button>
 
-        <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-2 font-poppins">Godrej Majesty</h2>
+        <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-2 font-poppins">
+          Godrej Majesty
+        </h2>
         <p className="text-xl text-center font-semibold text-gray-600 mb-4 font-inter">
           Fill in your details and instantly download the brochure! ✨
         </p>
 
         <p className="text-sm text-gray-500 text-center mb-6">
-          I authorize company representatives to Call, SMS, Email or WhatsApp me about its products and offers.
+          I authorize company representatives to Call, SMS, Email or WhatsApp me
+          about its products and offers.
         </p>
 
+        {/* ✅ Form or Download Section */}
         {!showDownloads ? (
           <form className="space-y-4" onSubmit={handleSubmit}>
             <input
@@ -138,7 +158,9 @@ export default function AutoPopupForm({ isOpen, onClose }) {
           </form>
         ) : (
           <div className="space-y-4 text-center animate-fadeIn">
-            <p className="text-green-700 font-bold text-lg">🎉 Thank you! You can now download the brochures:</p>
+            <p className="text-green-700 font-bold text-lg">
+              🎉 Thank you! You can now download the brochures:
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button
                 onClick={() => handleDownload(pdfs.site, "site-plan.pdf")}
@@ -172,7 +194,11 @@ export default function AutoPopupForm({ isOpen, onClose }) {
           </div>
         )}
 
-        {status && <p className="text-center text-sm mt-4 font-semibold text-gray-600">{status}</p>}
+        {status && (
+          <p className="text-center text-sm mt-4 font-semibold text-gray-600">
+            {status}
+          </p>
+        )}
       </div>
     </div>
   );
